@@ -459,7 +459,7 @@ result.</li>
 }
 
 dice_roll()</code></pre>
-<pre><code>## [1] 5</code></pre>
+<pre><code>## [1] 4</code></pre>
 <ol style="list-style-type: decimal">
 <li>Write a function to simulate rolling 2 6-sided dice that returns the
 sum of the rolls.</li>
@@ -476,7 +476,7 @@ sum of the rolls.</li>
 }
 
 craps_roll()</code></pre>
-<pre><code>## [1] &quot;4&quot; &quot;2&quot; &quot;6&quot;</code></pre>
+<pre><code>## [1] &quot;3&quot; &quot;2&quot; &quot;5&quot;</code></pre>
 <ol style="list-style-type: decimal">
 <li>Write a function that takes two people name’s as strings, simulates
 rolling a 6-sided die for each of the names, then returns the name of
@@ -513,38 +513,62 @@ winner
 }
 
 dice_battle(player_1 = &quot;Adam&quot;, player_2 = &quot;Manuel&quot;)</code></pre>
-<pre><code>## [1] &quot;Manuel&quot;</code></pre>
+<pre><code>## [1] &quot;Adam&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Write a second function (you may start by modifying the first one)
 that takes two names as strings, simulates both of them rolling die 15
 times, and returns the name of the person who “won” more rolls. Don’t
 reroll ties this time, but don’t count them as “wins”.</li>
 </ol>
-<pre class="r"><code># dice_war &lt;- function(player_1, player_2) {
-#   player_1_roll &lt;- sample(seq(6:1), 15, replace = T)
-#   player_2_roll &lt;- sample(seq(6:1), 15, replace = T)
-# 
-# 
-#   if (player_1_roll &gt; player_2_roll) {
-#     winner &lt;- player_1
-#   }
-#   else if (player_1_roll &lt; player_2_roll) {
-#     winner &lt;- player_2
-#   }
-# 
-#   else if (player_1_roll == player_2_roll) {
-#    winner &lt;- &quot;draw&quot;
-#   }
-# winner
-# }
-# dice_war(&#39;Adam&#39;, &#39;manuel&#39;)</code></pre>
+<pre class="r"><code>dice_war &lt;- function(player_1, player_2) {
+ player_1_roll &lt;- sample(seq(6:1), 15, replace = T)
+ player_2_roll &lt;- sample(seq(6:1), 15, replace = T)
+
+ player_1_wins &lt;- sum(player_1_roll &gt; player_2_roll)
+ player_2_wins &lt;- sum(player_2_roll &gt; player_1_roll)
+
+  if (player_1_wins &gt; player_2_wins) {
+   winner &lt;- player_1
+ }
+ else if (player_1_wins &lt; player_2_wins) {
+   winner &lt;- player_2
+ }
+ else if (player_1_wins == player_2_wins) {
+   winner &lt;- &quot;draw&quot;
+ }
+ winner
+}
+
+dice_war(&#39;Adam&#39;, &#39;Manuel&#39;)</code></pre>
+<pre><code>## [1] &quot;Manuel&quot;</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Modify your function from (2) so that the person in the first
 argument has a die that is weighted to get higher numbers more often
 (you may decide the actual percentage change). Run the function ten or
 so times. Does the second person ever win?</li>
 </ol>
-<pre class="r"><code># Your &quot;cheating&quot; function goes here</code></pre>
+<pre class="r"><code># Your &quot;cheating&quot; function goes here
+dice_war_rigged &lt;- function(player_1, player_2) {
+ player_1_roll &lt;- sample(seq(6:1), 15, replace = T, prob = c(0, 0, 0, 0, 0, 1))
+ player_2_roll &lt;- sample(seq(6:1), 15, replace = T, prob = c(1, 0, 0, 0, 0, 0))
+ 
+ player_1_wins &lt;- sum(player_1_roll &gt; player_2_roll)
+ player_2_wins &lt;- sum(player_2_roll &gt; player_1_roll)
+
+  if (player_1_wins &gt; player_2_wins) {
+   winner &lt;- player_1
+ }
+ else if (player_1_wins &lt; player_2_wins) {
+   winner &lt;- player_2
+ }
+ else if (player_1_wins == player_2_wins) {
+   winner &lt;- &quot;draw&quot;
+ }
+ winner
+}
+
+dice_war_rigged(&#39;Adam&#39;, &#39;Manuel&#39;)</code></pre>
+<pre><code>## [1] &quot;Adam&quot;</code></pre>
 </div>
 
 

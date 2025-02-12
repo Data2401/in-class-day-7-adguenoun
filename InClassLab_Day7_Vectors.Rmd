@@ -167,29 +167,52 @@ dice_battle(player_1 = "Adam", player_2 = "Manuel")
 2.  Write a second function (you may start by modifying the first one) that takes two names as strings, simulates both of them rolling die 15 times, and returns the name of the person who "won" more rolls. Don't reroll ties this time, but don't count them as "wins".
 
 ```{r Dice War}
-# dice_war <- function(player_1, player_2) {
-#   player_1_roll <- sample(seq(6:1), 15, replace = T)
-#   player_2_roll <- sample(seq(6:1), 15, replace = T)
-# 
-# 
-#   if (player_1_roll > player_2_roll) {
-#     winner <- player_1
-#   }
-#   else if (player_1_roll < player_2_roll) {
-#     winner <- player_2
-#   }
-# 
-#   else if (player_1_roll == player_2_roll) {
-#    winner <- "draw"
-#   }
-# winner
-# }
-# dice_war('Adam', 'manuel')
+dice_war <- function(player_1, player_2) {
+ player_1_roll <- sample(seq(6:1), 15, replace = T)
+ player_2_roll <- sample(seq(6:1), 15, replace = T)
+
+ player_1_wins <- sum(player_1_roll > player_2_roll)
+ player_2_wins <- sum(player_2_roll > player_1_roll)
+
+  if (player_1_wins > player_2_wins) {
+   winner <- player_1
+ }
+ else if (player_1_wins < player_2_wins) {
+   winner <- player_2
+ }
+ else if (player_1_wins == player_2_wins) {
+   winner <- "draw"
+ }
+ winner
+}
+
+dice_war('Adam', 'Manuel')
+
 
 ```
 
 3.  Modify your function from (2) so that the person in the first argument has a die that is weighted to get higher numbers more often (you may decide the actual percentage change). Run the function ten or so times. Does the second person ever win?
 
-```{r}
+```{r rigged dicewar}
 # Your "cheating" function goes here
+dice_war_rigged <- function(player_1, player_2) {
+ player_1_roll <- sample(seq(6:1), 15, replace = T, prob = c(0, 0, 0, 0, 0, 1))
+ player_2_roll <- sample(seq(6:1), 15, replace = T, prob = c(1, 0, 0, 0, 0, 0))
+ 
+ player_1_wins <- sum(player_1_roll > player_2_roll)
+ player_2_wins <- sum(player_2_roll > player_1_roll)
+
+  if (player_1_wins > player_2_wins) {
+   winner <- player_1
+ }
+ else if (player_1_wins < player_2_wins) {
+   winner <- player_2
+ }
+ else if (player_1_wins == player_2_wins) {
+   winner <- "draw"
+ }
+ winner
+}
+
+dice_war_rigged('Adam', 'Manuel')
 ```
